@@ -1,0 +1,4 @@
+Revision history for Perl extension Plack::Middleware::Test::StashWarnings
+
+0.01  2010-10-07
+        - original version
