@@ -2,7 +2,7 @@ use inc::Module::Install;
 name 'Plack-Middleware-Test-StashWarnings';
 all_from 'lib/Plack/Middleware/Test/StashWarnings.pm';
 readme_from 'lib/Plack/Middleware/Test/StashWarnings.pm';
-auto_set_repository;
+repository 'http://github.com/bestpractical/plack-middleware-test-stashwarnings';
 
 requires 'Storable';
 requires 'Plack::Test';
