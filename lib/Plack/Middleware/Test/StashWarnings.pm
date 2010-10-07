@@ -57,7 +57,7 @@ Plack::Middleware::Test::StashWarnings - Test your application's warnings
 
   use Storable 'thaw';
   $mech->get('/__test_warnings');
-  my @warnings = thaw($mech->content);
+  my @warnings = @{ thaw($mech->content) };
   like(@warnings[0], qr/No private key/);
 
 =head1 DESCRIPTION
