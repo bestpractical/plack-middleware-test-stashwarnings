@@ -27,13 +27,15 @@ test_psgi $t, sub {
 
     $res = $cb->(GET "/?name=foo");
     like $res->content, qr/Hello foo!/;
+    is $res->content_type, 'text/plain';
 
     $res = $cb->(GET "/__test_warnings");
-    is_deeply thaw($res->content), [];
+    is_deeply thaw($res->content), [], 'no warnings';
     is $res->content_type, 'application/x-storable';
 
     $res = $cb->(GET "/");
     like $res->content, qr/Hello !/;
+    is $res->content_type, 'text/plain';
 
     $res = $cb->(GET "/__test_warnings");
     my @warnings = @{ thaw($res->content) };
