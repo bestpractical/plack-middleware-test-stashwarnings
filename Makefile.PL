@@ -5,8 +5,12 @@ readme_from 'lib/Plack/Middleware/Test/StashWarnings.pm';
 repository 'http://github.com/bestpractical/plack-middleware-test-stashwarnings';
 
 requires 'Storable';
-requires 'Plack::Test';
+requires 'Plack';
+
 test_requires 'Test::More';
+test_requires 'Plack::Test';
+test_requires 'Plack::Request';
+test_requires 'HTTP::Request::Common';
 
 author_tests('xt');
 
