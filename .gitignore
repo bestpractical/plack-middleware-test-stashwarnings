@@ -1,4 +1,5 @@
 META.yml
+MANIFEST
 Makefile
 inc/
 blib/
