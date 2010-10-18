@@ -8,7 +8,7 @@ SYNOPSIS
 
       use Storable 'thaw';
       $mech->get('/__test_warnings');
-      my @warnings = thaw($mech->content);
+      my @warnings = @{ thaw($mech->content) };
       like(@warnings[0], qr/No private key/);
 
 DESCRIPTION
@@ -19,8 +19,8 @@ DESCRIPTION
 AUTHOR
     Shawn M Moore "sartak@bestpractical.com"
 
-    Tatsuhiko Miyagawa wrote Plack::Middleware::Test::Recordings which
-    served as a model for this module.
+    Tatsuhiko Miyagawa wrote Plack::Middleware::Test::Recorder which served
+    as a model for this module.
 
 LICENSE
     This library is free software; you can redistribute it and/or modify it
