@@ -70,7 +70,7 @@ sure your application complains about the right things.
 
 Shawn M Moore C<sartak@bestpractical.com>
 
-Tatsuhiko Miyagawa wrote L<Plack::Middleware::Test::Recordings> which served as
+Tatsuhiko Miyagawa wrote L<Plack::Middleware::Test::Recorder> which served as
 a model for this module.
 
 =head1 LICENSE
