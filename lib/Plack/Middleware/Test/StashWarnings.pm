@@ -18,27 +18,27 @@ sub call {
         return [ 200, ["Content-Type", "application/x-storable"], [ $self->dump_warnings ] ];
     }
 
+    my $ret = $self->_stash_warnings_for($self->app, $env);
+
+    # for the streaming API, we need to re-instate the dynamic sigwarn handler
+    # around the streaming callback
+    if (ref($ret) eq 'CODE') {
+        return sub { $self->_stash_warnings_for($ret, @_) };
+    }
+
+    return $ret;
+}
+
+sub _stash_warnings_for {
+    my $self = shift;
+    my $code = shift;
+
     local $SIG{__WARN__} = sub {
         push @{ $self->{stashed_warnings} }, @_;
         warn @_ if $ENV{TEST_VERBOSE};
     };
 
-    my $ret = $self->app->($env);
-
-    # for the streaming API, we need to re-instate the dynamic sigwarn handler
-    # around the streaming callback
-    if (ref($ret) eq 'CODE') {
-        my $original_ret = $ret;
-        $ret = sub {
-            local $SIG{__WARN__} = sub {
-                push @{ $self->{stashed_warnings} }, @_;
-                warn @_ if $ENV{TEST_VERBOSE};
-            };
-            $original_ret->(@_);
-        };
-    }
-
-    return $ret;
+    return $code->(@_);
 }
 
 sub dump_warnings {
