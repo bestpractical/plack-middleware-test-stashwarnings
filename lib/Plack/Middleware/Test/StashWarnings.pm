@@ -23,7 +23,22 @@ sub call {
         warn @_ if $ENV{TEST_VERBOSE};
     };
 
-    $self->app->($env);
+    my $ret = $self->app->($env);
+
+    # for the streaming API, we need to re-instate the dynamic sigwarn handler
+    # around the streaming callback
+    if (ref($ret) eq 'CODE') {
+        my $original_ret = $ret;
+        $ret = sub {
+            local $SIG{__WARN__} = sub {
+                push @{ $self->{stashed_warnings} }, @_;
+                warn @_ if $ENV{TEST_VERBOSE};
+            };
+            $original_ret->(@_);
+        };
+    }
+
+    return $ret;
 }
 
 sub dump_warnings {
