@@ -2,6 +2,7 @@ use strict;
 use Plack::Test;
 use Test::More;
 use HTTP::Request::Common;
+use Scalar::Util 'weaken';
 
 use Plack::Middleware::Test::StashWarnings;
 use Plack::Request;
@@ -17,9 +18,12 @@ local $SIG{__WARN__} = sub {
     push @warnings, @_;
 };
 
+my $weak_mw;
 {
     my $mw = Plack::Middleware::Test::StashWarnings->new;
     my $new_app = $mw->wrap($app);
+
+    weaken($weak_mw = $mw);
 
     test_psgi $new_app, sub {
         my $cb = shift;
@@ -30,6 +34,13 @@ local $SIG{__WARN__} = sub {
     };
 
     is @warnings, 0, "no warnings yet";
+}
+
+# XXX: on 5.8.x we have to explicitly trigger the destructor because there's a memory leak
+# so the destructor isn't called til global destruction. which is actually *fine* except
+# when you want to test for the destructor's behavior
+if ($weak_mw) {
+    $weak_mw->DESTROY;
 }
 
 is @warnings, 1, "caught one warning";
