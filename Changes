@@ -1,5 +1,8 @@
 Revision history for Perl extension Plack::Middleware::Test::StashWarnings
 
+0.03  2010-11-09
+        - fix failing test on 5.8
+
 0.02  2010-10-19
         - streaming API support (clkao++ for the assist)
 
