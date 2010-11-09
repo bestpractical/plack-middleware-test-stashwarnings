@@ -3,7 +3,7 @@ use Plack::Test;
 use Test::More;
 use HTTP::Request::Common;
 
-use Plack::Builder;
+use Plack::Middleware::Test::StashWarnings;
 use Plack::Request;
 
 my $app = sub {
@@ -18,12 +18,10 @@ local $SIG{__WARN__} = sub {
 };
 
 {
-    my $t = builder {
-        enable "Test::StashWarnings";
-        $app;
-    };
+    my $mw = Plack::Middleware::Test::StashWarnings->new;
+    my $new_app = $mw->wrap($app);
 
-    test_psgi $t, sub {
+    test_psgi $new_app, sub {
         my $cb = shift;
 
         my $res = $cb->(GET "/");
