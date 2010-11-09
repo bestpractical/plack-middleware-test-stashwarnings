@@ -6,8 +6,6 @@ use HTTP::Request::Common;
 use Plack::Builder;
 use Plack::Request;
 
-use Storable 'thaw';
-
 my $app = sub {
     my $req = Plack::Request->new(shift);
     my $name = $req->param('name');
