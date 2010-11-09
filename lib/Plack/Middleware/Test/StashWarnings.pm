@@ -49,7 +49,7 @@ sub dump_warnings {
 
 sub DESTROY {
     my $self = shift;
-    for (@{ $self->{stashed_warnings} }) {
+    for (splice @{ $self->{stashed_warnings} }) {
         warn "Unhandled warning: $_";
     }
 }
