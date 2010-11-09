@@ -1,8 +1,13 @@
 use strict;
 use Plack::Test;
 use Test::More;
-use HTTP::Request::Common;
 
+BEGIN {
+    plan skip_all => "Perls before 5.10 break this DESTROY-based test"
+        if $] < 5.010;
+}
+
+use HTTP::Request::Common;
 use Plack::Builder;
 use Plack::Request;
 
