@@ -11,6 +11,7 @@ test_requires 'Test::More';
 test_requires 'Plack::Test';
 test_requires 'Plack::Request';
 test_requires 'HTTP::Request::Common';
+test_requires 'Scalar::Util';
 
 author_tests('xt');
 
