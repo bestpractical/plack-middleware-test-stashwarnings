@@ -84,20 +84,20 @@ sure your application complains about the right things.
 =head1 RATIONALE
 
 Warnings are an important part of any application. Your web application should
-warn the user when something is amiss.
+warn its operators when something is amiss.
 
-Almost as importantly, we want to be able to test that the web application
-gracefully copes with bad input, the back button, and all other aspects of the
-user experience.
+Almost as importantly, your web application should gracefully copes with bad
+input, the back button, and all other aspects of the user experience.
 
 Unfortunately, tests seldom cover what happens when things go poorly. Are you
-C<sure> that your application checks authorization for that action? Are you
-C<sure> it will tomorrow?
+I<sure> that your application correctly denies that action and logs the
+failure? Are you I<sure> it will tomorrow?
 
-This module lets you retrieve the warnings that your forked server throws. That
-way you can test that your application continues to throw warnings when it
+This module lets you retrieve the warnings that your forked server issues. That
+way you can test that your application continues to issue warnings when it
 makes sense. Catching the warnings also keeps your test output tidy. Finally,
-you'll be able to see when your application throws new, unexpected warnings.
+you'll be able to see (and be notified via failing tests) when your
+application issues new, unexpected warnings so you can fix them immediately.
 
 =head1 AUTHOR
 
