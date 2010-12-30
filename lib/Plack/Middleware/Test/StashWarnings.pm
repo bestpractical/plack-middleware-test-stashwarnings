@@ -33,9 +33,10 @@ sub _stash_warnings_for {
     my $self = shift;
     my $code = shift;
 
+    my $old_warn = $SIG{__WARN__} || sub { warn @_ };
     local $SIG{__WARN__} = sub {
         push @{ $self->{stashed_warnings} }, @_;
-        warn @_ if $ENV{TEST_VERBOSE};
+        $old_warn->(@_) if $ENV{TEST_VERBOSE};
     };
 
     return $code->(@_);
