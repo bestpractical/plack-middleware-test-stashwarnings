@@ -1,5 +1,9 @@
 Revision history for Perl extension Plack::Middleware::Test::StashWarnings
 
+0.05  2011-06-08
+        - improved documentation
+        - try harder to use $SIG{__WARN__} if it's there
+
 0.04  2010-11-17
         - add implied dep on Scalar::Util
 

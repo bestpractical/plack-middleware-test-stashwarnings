@@ -2,7 +2,7 @@ package Plack::Middleware::Test::StashWarnings;
 
 use strict;
 use 5.008_001;
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use parent qw(Plack::Middleware);
 use Carp ();
