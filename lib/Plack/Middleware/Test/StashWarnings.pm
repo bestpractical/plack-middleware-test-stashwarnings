@@ -101,7 +101,7 @@ content.
 Warnings are an important part of any application. Your web application should
 warn its operators when something is amiss.
 
-Almost as importantly, your web application should gracefully copes with bad
+Almost as importantly, your web application should gracefully cope with bad
 input, the back button, and all other aspects of the user experience.
 
 Unfortunately, tests seldom cover what happens when things go poorly. Are you
