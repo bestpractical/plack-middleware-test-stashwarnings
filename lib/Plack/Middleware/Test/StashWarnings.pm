@@ -68,13 +68,22 @@ Plack::Middleware::Test::StashWarnings - Test your application's warnings
 
 =head1 SYNOPSIS
 
+  # for your PSGI application:
   enable "Test::StashWarnings";
 
 
+  # for your Test::WWW::Mechanize subclass:
   use Storable 'thaw';
-  $mech->get('/__test_warnings');
-  my @warnings = @{ thaw($mech->content) };
-  like(@warnings[0], qr/No private key/);
+  sub get_warnings {
+      local $Test::Builder::Level = $Test::Builder::Level + 1;
+      my $self = shift;
+  
+      my $clone = $self->clone;
+      return unless $clone->get_ok('/__test_warnings');
+  
+      my @warnings = @{ thaw $clone->content };
+      return @warnings;
+  }
 
 =head1 DESCRIPTION
 
