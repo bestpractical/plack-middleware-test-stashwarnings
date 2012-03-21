@@ -1,5 +1,8 @@
 Revision history for Perl extension Plack::Middleware::Test::StashWarnings
 
+0.06  2012-03-21
+        - Added a method to add a warning by hand
+
 0.05  2011-06-08
         - improved documentation
         - try harder to use $SIG{__WARN__} if it's there
