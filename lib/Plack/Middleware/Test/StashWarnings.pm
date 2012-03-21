@@ -35,11 +35,16 @@ sub _stash_warnings_for {
 
     my $old_warn = $SIG{__WARN__} || sub { warn @_ };
     local $SIG{__WARN__} = sub {
-        push @{ $self->{stashed_warnings} }, @_;
+        $self->add_warning(@_);
         $old_warn->(@_) if $ENV{TEST_VERBOSE};
     };
 
     return $code->(@_);
+}
+
+sub add_warning {
+    my $self = shift;
+    push @{ $self->{stashed_warnings} }, @_;
 }
 
 sub dump_warnings {
