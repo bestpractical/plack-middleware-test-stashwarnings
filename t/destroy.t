@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 use Plack::Test;
 use Test::More;
 use HTTP::Request::Common;
