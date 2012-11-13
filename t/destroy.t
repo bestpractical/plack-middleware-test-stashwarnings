@@ -20,6 +20,11 @@ local $SIG{__WARN__} = sub {
 };
 
 my $weak_mw;
+
+# Plack::Middleware::Test::StashWarnings calls the old __WARN__ handler
+# if TEST_VERBOSE is set.  Fake its existance for now, so that tests
+# pass under both `prove -v` and `prove`
+$ENV{TEST_VERBOSE} = 1;
 {
     my $mw = Plack::Middleware::Test::StashWarnings->new;
     my $new_app = $mw->wrap($app);
@@ -34,7 +39,9 @@ my $weak_mw;
         is $res->content_type, 'text/plain';
     };
 
-    is @warnings, 0, "no warnings yet";
+    is @warnings, 1, "Got the uninitialized value warning";
+    like $warnings[0], qr/Use of uninitialized value (?:\$name )?in concatenation/;
+    @warnings = ();
 }
 
 # XXX: on 5.8.x we have to explicitly trigger the destructor because there's a memory leak
@@ -44,7 +51,7 @@ if ($weak_mw) {
     $weak_mw->DESTROY;
 }
 
-is @warnings, 1, "caught one warning";
+is @warnings, 1, "Got 'uncaught warning' warning";
 like $warnings[0], qr/Unhandled warning: Use of uninitialized value (?:\$name )?in concatenation/;
 
 done_testing;
