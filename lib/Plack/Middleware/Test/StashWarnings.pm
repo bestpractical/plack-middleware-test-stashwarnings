@@ -8,6 +8,14 @@ use parent qw(Plack::Middleware);
 use Carp ();
 use Storable 'nfreeze';
 
+sub new {
+    my $proto = shift;
+    my $class = ref $proto || $proto;
+    my $self = $class->SUPER::new(@_);
+    $self->{verbose} = $ENV{TEST_VERBOSE} unless defined $self->{verbose};
+    return $self;
+}
+
 sub call {
     my ($self, $env) = @_;
 
@@ -36,7 +44,7 @@ sub _stash_warnings_for {
     my $old_warn = $SIG{__WARN__} || sub { warn @_ };
     local $SIG{__WARN__} = sub {
         $self->add_warning(@_);
-        $old_warn->(@_) if $ENV{TEST_VERBOSE};
+        $old_warn->(@_) if $self->{verbose};
     };
 
     return $code->(@_);
