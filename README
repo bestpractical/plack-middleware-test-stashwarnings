@@ -30,6 +30,14 @@ DESCRIPTION
     Test::WWW::Mechanize you can just "get" that URL and "thaw" in Storable
     its content.
 
+ARGUMENTS
+    Plack::Middleware::Test::StashWarnings takes one optional argument,
+    "verbose", which defaults to $ENV{TEST_VERBOSE}. If set to true, it will
+    bubble warnings up to any pre-existing "__WARN__" handler. Turning this
+    explicitly off may be useful if your tests load Test::NoWarnings and
+    also use Test::WWW::Mechanize::PSGI for non-forking testing -- failure
+    to do so would result in test failures even for caught warnings.
+
 RATIONALE
     Warnings are an important part of any application. Your web application
     should warn its operators when something is amiss.

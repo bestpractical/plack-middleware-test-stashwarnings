@@ -1,5 +1,9 @@
 Revision history for Perl extension Plack::Middleware::Test::StashWarnings
 
+0.08  2014-05-16
+        - Add a 'verbose' option to control if warnings are propagated
+          through to an existing WARN handler.
+
 0.07  2012-11-12
         - Test updates to work with newer Test::Harness
 
